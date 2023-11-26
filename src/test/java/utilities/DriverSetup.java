@@ -6,6 +6,7 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Test;
+import pages.HomePage;
 
 import java.io.File;
 import java.net.MalformedURLException;
@@ -14,9 +15,10 @@ import java.time.Duration;
 import java.util.concurrent.TimeUnit;
 
 public class DriverSetup {
+
     public AndroidDriver driver;
 
-    @Test
+    @BeforeSuite
     public void startApp() throws MalformedURLException {
         File f = new File("src/test/java/resources");
         File fs = new File(f, "General-Store.apk");
@@ -26,10 +28,12 @@ public class DriverSetup {
         cap.setCapability("deviceName", "local1");
         cap.setCapability("udid", "emulator-5554");
         cap.setCapability("app", fs.getAbsolutePath());
+        cap.setCapability("appPackage","com.androidsample.generalstore");
         driver = new AndroidDriver(new URL("http://192.168.0.43:4723/"), cap);
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 
     }
+
 
     @AfterSuite
     public void removeApp() {
