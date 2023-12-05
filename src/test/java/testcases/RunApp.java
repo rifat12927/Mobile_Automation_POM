@@ -1,5 +1,6 @@
 package testcases;
 
+import io.appium.java_client.AppiumBy;
 import io.appium.java_client.android.AndroidDriver;
 import org.testng.annotations.Test;
 import pages.HomePage;
@@ -13,12 +14,16 @@ public class RunApp extends DriverSetup {
 
     @Test
     public void runApp() throws InterruptedException {
-//        driver.findElement(homePage.country);
-        homePage.getElement(homePage.country);
-        homePage.selectWithText("Bangladesh");
+//
+        homePage.clickOnElement(homePage.country);
+        homePage.getElement(AppiumBy.androidUIAutomator("new UiScrollable(new UiSelector().scrollable(true)).scrollIntoView(text(\"Bangladesh\"));"));
+        homePage.clickOnElement(homePage.Bangladesh);
+//
         homePage.inputElement(homePage.name, "Rifat");
         homePage.clickOnElement(homePage.genderMale);
         homePage.clickOnElement(homePage.letsShopButton);
+        Thread.sleep(5000);
+
 
 
     }

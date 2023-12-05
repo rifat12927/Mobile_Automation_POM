@@ -7,16 +7,19 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import utilities.DriverSetup;
 
+import javax.swing.*;
 import java.time.Duration;
 
 public class BasePage extends DriverSetup {
     public WebDriverWait wait;
 
+
     public WebElement getElement(By locator) {
-        return driver.findElement(locator);
+        return getDriver().findElement(locator);
 
     }
 
@@ -29,9 +32,6 @@ public class BasePage extends DriverSetup {
         getElement(locator).sendKeys(text);
     }
 
-    public void selectWithText(String text) {
-        getElement(AppiumBy.androidUIAutomator("new UiScrollable(new UiSelector().scrollable(true)).scrollIntoView(text(text"));
-    }
 
 
 }

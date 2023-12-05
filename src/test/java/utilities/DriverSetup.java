@@ -15,8 +15,18 @@ import java.time.Duration;
 import java.util.concurrent.TimeUnit;
 
 public class DriverSetup {
-
     public AndroidDriver driver;
+    private static final ThreadLocal<AndroidDriver> LOCAL_DRIVER = new ThreadLocal<>();
+    public static void setDriver(AndroidDriver driver) {
+        DriverSetup.LOCAL_DRIVER.set(driver);
+    }
+
+    public static AndroidDriver getDriver() {
+        return LOCAL_DRIVER.get();
+    }
+
+
+
 
     @BeforeSuite
     public void startApp() throws MalformedURLException {
@@ -28,16 +38,19 @@ public class DriverSetup {
         cap.setCapability("deviceName", "local1");
         cap.setCapability("udid", "emulator-5554");
         cap.setCapability("app", fs.getAbsolutePath());
-        cap.setCapability("appPackage","com.androidsample.generalstore");
+//        cap.setCapability("appPackage","com.androidsample.generalstore");
+
         driver = new AndroidDriver(new URL("http://192.168.0.43:4723/"), cap);
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        setDriver(driver);
 
     }
 
 
     @AfterSuite
     public void removeApp() {
-        driver.removeApp("com.androidsample.generalstore");
+//        driver.removeApp("com.androidsample.generalstore");
+        getDriver().removeApp("com.androidsample.generalstore");
     }
 }
 
